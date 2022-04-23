@@ -21,7 +21,7 @@ spring:
     consumer:
       bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: com.transaction.deserializer.AccountCreationTopicDeserializer
+      value-deserializer: com.transaction.deserialzier.AccountCreationTopicDeserializer
 
 app:
   jwtSecret: DUMMY_SECRETE_KEY_FOR_SERVICE
