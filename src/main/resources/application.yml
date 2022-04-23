@@ -17,3 +17,5 @@ spring:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+app:
+  jwtSecret: DUMMY_SECRETE_KEY_FOR_SERVICE

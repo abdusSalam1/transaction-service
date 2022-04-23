@@ -1,5 +1,6 @@
 package com.transaction.config.advice;
 
+import com.transaction.exception.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -24,14 +25,15 @@ public class ApiControllerAdvice implements ResponseBodyAdvice<Object> {
 
     private final static Logger logger = LoggerFactory.getLogger(ApiControllerAdvice.class);
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<Object> handleBadRequestException(Exception ex, WebRequest request) {
+
+    @ExceptionHandler({AuthenticationException.class})
+    public ResponseEntity<Object> handlerAuthenticationException(AuthenticationException ex, WebRequest request) {
         ApiError error = new ApiError(ex.getMessage(), 0);
         ApiResponseEnvelope envelope = new ApiResponseEnvelope(false);
         envelope.addError(error);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        return new ResponseEntity(envelope, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(envelope, HttpStatus.UNAUTHORIZED);
     }
 
 

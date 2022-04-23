@@ -4,20 +4,21 @@ import com.transaction.config.CheckClientAuthority;
 import com.transaction.handler.TransactionHandler;
 import com.transaction.model.TransactionModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/transactions")
+@RestController("/balances")
 @RequestMapping()
 @RequiredArgsConstructor
-public class TransactionController {
+public class BalanceController {
 
     private final TransactionHandler transactionHandler;
 
-    @PostMapping
+    @GetMapping
     @CheckClientAuthority
-    public void performTransaction(TransactionModel transactionModel) {
+    public void getBalance() {
 
     }
 }
