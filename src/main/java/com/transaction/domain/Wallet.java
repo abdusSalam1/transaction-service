@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,7 @@ public class Wallet {
     private Long id;
     @ManyToOne
     private Account account;
+//    private BigDecimal balance;
     @OneToMany(mappedBy = "wallet")
     private List<Transaction> transactions;
     private String purpose;

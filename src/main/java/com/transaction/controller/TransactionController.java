@@ -2,7 +2,7 @@ package com.transaction.controller;
 
 import com.transaction.config.CheckClientAuthority;
 import com.transaction.handler.TransactionHandler;
-import com.transaction.model.TransactionModel;
+import com.transaction.model.WalletModel;
 import com.transaction.model.TransactionResponseModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ public class TransactionController {
 
     @PostMapping
     @CheckClientAuthority
-    public TransactionResponseModel performTransaction(TransactionModel transactionModel) {
+    public TransactionResponseModel performTransaction(WalletModel transactionModel) {
         return transactionHandler.performTransaction(transactionModel);
     }
 }
