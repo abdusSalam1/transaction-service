@@ -19,3 +19,12 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 app:
   jwtSecret: DUMMY_SECRETE_KEY_FOR_SERVICE
+
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.notification.deserializer.AccountCreationTopicDeserializer
+server:
+  port: 8082
