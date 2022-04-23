@@ -18,6 +18,8 @@ public class Transaction {
     private Long id;
     private BigDecimal amount;
     private TransactionType type;
+    private String purpose;
+    private String description;
     @Setter
     @ManyToOne
     @JoinColumn(name = "wallet_id", referencedColumnName = "id", nullable = false)

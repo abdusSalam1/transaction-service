@@ -11,9 +11,8 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WalletModel {
+public class TransactionModel {
 
-    private AccountModel account;
     private BigDecimal amount;
     private String purpose;
     private String description;

@@ -1,6 +1,6 @@
 package com.transaction.handler;
 
-import com.transaction.model.WalletModel;
+import com.transaction.model.TransactionModel;
 import com.transaction.model.TransactionResponseModel;
 import com.transaction.service.WalletService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ public class TransactionHandler {
 
     private final WalletService walletService;
 
-    public TransactionResponseModel performTransaction(WalletModel transactionModel) {
+    public TransactionResponseModel performTransaction(String accountId, TransactionModel transactionModel) {
         return null;
     }
 }

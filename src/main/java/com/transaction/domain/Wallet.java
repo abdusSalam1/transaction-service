@@ -30,7 +30,5 @@ public class Wallet {
 //    private BigDecimal balance;
     @OneToMany(mappedBy = "wallet")
     private List<Transaction> transactions;
-    private String purpose;
-    private String description;
 
 }

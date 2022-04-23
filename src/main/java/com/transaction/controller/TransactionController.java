@@ -2,12 +2,10 @@ package com.transaction.controller;
 
 import com.transaction.config.CheckClientAuthority;
 import com.transaction.handler.TransactionHandler;
-import com.transaction.model.WalletModel;
+import com.transaction.model.TransactionModel;
 import com.transaction.model.TransactionResponseModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("/transactions")
 @RequestMapping()
@@ -16,9 +14,9 @@ public class TransactionController {
 
     private final TransactionHandler transactionHandler;
 
-    @PostMapping
+    @PostMapping("/{accountId}")
     @CheckClientAuthority
-    public TransactionResponseModel performTransaction(WalletModel transactionModel) {
-        return transactionHandler.performTransaction(transactionModel);
+    public TransactionResponseModel performTransaction(@PathVariable String accountId, @RequestBody TransactionModel transactionModel) {
+        return transactionHandler.performTransaction(accountId,transactionModel);
     }
 }
