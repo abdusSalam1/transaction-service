@@ -5,14 +5,12 @@
  */
 package com.transaction.domain;
 
-import com.transaction.domain.transaction.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
