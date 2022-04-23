@@ -24,8 +24,8 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public void save(Wallet wallet) throws DuplicateWalletException {
-        if(walletRepository.findByWallet_Account_Id(wallet.getAccount().getId()) != null)
-            throw new DuplicateWalletException();
+//        if(walletRepository.findByWallet_Account_Id(wallet.getAccount().getId()) != null)
+//            throw new DuplicateWalletException();
         walletRepository.save(wallet);
     }
 }

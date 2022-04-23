@@ -27,7 +27,7 @@ public class Wallet {
     private Long id;
     @ManyToOne
     private Account account;
-//    private BigDecimal balance;
+    private BigDecimal balance;
     @OneToMany(mappedBy = "wallet")
     private List<Transaction> transactions;
 
