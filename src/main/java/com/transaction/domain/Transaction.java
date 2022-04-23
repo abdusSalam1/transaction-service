@@ -1,6 +1,5 @@
 package com.transaction.domain;
 
-import com.transaction.domain.Wallet;
 import com.transaction.enums.TransactionType;
 import lombok.*;
 

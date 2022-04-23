@@ -18,7 +18,7 @@ class AccountCreationTopicDeserializerTest {
     }
 
     @Test
-    public void givenAccountBytesWhenDeserializationShouldReturnAccount() {
+    public void givenAccountBytesShouldReturnAccount() {
         JSONObject obj = new JSONObject();
         obj.put("id", 123);
         obj.put("name", "abdus");

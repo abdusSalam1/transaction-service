@@ -2,7 +2,6 @@ package com.transaction.controller;
 
 import com.transaction.config.CheckClientAuthority;
 import com.transaction.handler.BalanceHandler;
-import com.transaction.model.BalanceModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,7 @@ public class BalanceController {
 
     @GetMapping("/{accountId}")
     @CheckClientAuthority
-    public BalanceModel getBalance(@PathVariable String accountId) {
-        return balanceHandler.getBalance(accountId);
+    public void getBalance(@PathVariable String accountId) {
+        balanceHandler.getBalance(accountId);
     }
 }
