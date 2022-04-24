@@ -1,5 +1,6 @@
 package com.transaction.service;
 
+import com.transaction.domain.NotificationType;
 import com.transaction.domain.Transaction;
 import com.transaction.domain.Wallet;
 import com.transaction.enums.TransactionType;
@@ -19,10 +20,12 @@ public class WalletServiceImpl implements WalletService {
 
     private final WalletRepository walletRepository;
     private final TransactionRepository transactionRepository;
+    private final NotificationService notificationService;
 
     @Override
-    public BigDecimal calculateBalance(Long accountId) {
-        return null;
+    public BigDecimal calculateBalance(Long accountId) throws AccountNotFoundException {
+        Wallet wallet = walletRepository.findByAccount_Id(accountId).orElseThrow(AccountNotFoundException::new);
+        return wallet.getBalance();
     }
 
     @Override
@@ -42,9 +45,13 @@ public class WalletServiceImpl implements WalletService {
         switch (transaction.getType()) {
             case DEBIT:
                 wallet.setBalance(wallet.getBalance().subtract(transaction.getAmount()));
+                //TODO: Can update this method as per need not passing any transaction data for now
+                notificationService.sendEmail(NotificationType.DEBIT_TRANSACTION,wallet.getAccount().getEmail());
                 break;
             case CREDIT:
                 wallet.setBalance(wallet.getBalance().add(transaction.getAmount()));
+                //TODO: Can update this method as per need not passing any transaction data for now
+                notificationService.sendEmail(NotificationType.CREDIT_TRANSACTION,wallet.getAccount().getEmail());
                 break;
             default:
                 throw new IllegalArgumentException("Invalid transaction type");

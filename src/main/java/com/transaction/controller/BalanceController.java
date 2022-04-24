@@ -1,7 +1,9 @@
 package com.transaction.controller;
 
 import com.transaction.config.CheckClientAuthority;
+import com.transaction.exception.AccountNotFoundException;
 import com.transaction.handler.BalanceHandler;
+import com.transaction.model.BalanceModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +19,7 @@ public class BalanceController {
 
     @GetMapping("/{accountId}")
     @CheckClientAuthority
-    public void getBalance(@PathVariable String accountId) {
-        balanceHandler.getBalance(accountId);
+    public BalanceModel getBalance(@PathVariable Long accountId) throws AccountNotFoundException {
+        return balanceHandler.getBalance(accountId);
     }
 }
