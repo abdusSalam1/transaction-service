@@ -14,8 +14,8 @@ public class BalanceHandler {
 
     private final WalletService walletService;
 
-    public BalanceModel getBalance(Long accountId) throws AccountNotFoundException {
-       BigDecimal balance = walletService.calculateBalance(accountId);
+    public BalanceModel getBalance(String email) throws AccountNotFoundException {
+       BigDecimal balance = walletService.calculateBalance(email);
        return BalanceModel.builder().balance(balance).build();
     }
 }

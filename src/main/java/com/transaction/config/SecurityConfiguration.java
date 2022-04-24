@@ -20,9 +20,10 @@ public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.formLogin().
+                loginPage("/login").and().authorizeRequests()
                 .antMatchers(new String[]{
-                        "/api/*"
+                        "/api/balances/*","/api/transactions/*"
                 }).permitAll()
                 .anyRequest().authenticated().and()
                 .csrf().disable();

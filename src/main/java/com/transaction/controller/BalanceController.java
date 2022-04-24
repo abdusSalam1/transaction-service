@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/balances")
-@RequestMapping()
+@RestController
+@RequestMapping("/api/balances")
 @RequiredArgsConstructor
 public class BalanceController {
 
     private final BalanceHandler balanceHandler;
 
-    @GetMapping("/{accountId}")
+    @GetMapping("/{email}")
     @CheckClientAuthority
-    public BalanceModel getBalance(@PathVariable Long accountId) throws AccountNotFoundException {
-        return balanceHandler.getBalance(accountId);
+    public BalanceModel getBalance(@PathVariable String email) throws AccountNotFoundException {
+        return balanceHandler.getBalance(email);
     }
 }

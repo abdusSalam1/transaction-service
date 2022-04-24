@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 public interface WalletService {
 
-    BigDecimal calculateBalance(Long accountId) throws AccountNotFoundException;
+    BigDecimal calculateBalance(String email) throws AccountNotFoundException;
 
     void save(Wallet wallet) throws DuplicateWalletException;
 

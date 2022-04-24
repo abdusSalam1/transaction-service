@@ -1,9 +1,6 @@
 package com.transaction.config.advice;
 
-import com.transaction.exception.AuthenticationException;
-import com.transaction.exception.DuplicateAccountException;
-import com.transaction.exception.DuplicateWalletException;
-import com.transaction.exception.InSufficientBalanceException;
+import com.transaction.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -28,6 +25,15 @@ public class ApiControllerAdvice implements ResponseBodyAdvice<Object> {
 
     private final static Logger logger = LoggerFactory.getLogger(ApiControllerAdvice.class);
 
+    @ExceptionHandler({AccountNotFoundException.class})
+    public ResponseEntity<Object> handleAccountNotFoundException(AccountNotFoundException ex, WebRequest request) {
+        ApiError error = new ApiError(ex.getMessage(), 0);
+        ApiResponseEnvelope envelope = new ApiResponseEnvelope(false);
+        envelope.addError(error);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity(envelope, HttpStatus.UNAUTHORIZED);
+    }
 
     @ExceptionHandler({AuthenticationException.class})
     public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex, WebRequest request) {

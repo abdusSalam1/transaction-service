@@ -15,16 +15,21 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @RequiredArgsConstructor
 public class ClientAuthorityAspect {
 
-    private static final String AUTHORIZATION = "Bearer ";
+    private static final String AUTHORIZATION = "token";
     @Value("${app.jwtSecret}")
     private String jwtSecret;
 
     @Before("@annotation(checkAuthority)")
     public void checkAuthority(CheckClientAuthority checkAuthority) throws AuthenticationException {
-        String jwtToken = getJWTToken();
-        String subject = getSubject(jwtToken);
-        if (!subject.equalsIgnoreCase("account-service"))
+        try {
+            String jwtToken = getJWTToken();
+            String subject = getSubject(jwtToken);
+            if (!subject.equalsIgnoreCase("account-service"))
+                throw new AuthenticationException("Unauthorized request");
+        }
+        catch (Exception ex){
             throw new AuthenticationException("Unauthorized request");
+        }
     }
 
     public String getJWTToken() {

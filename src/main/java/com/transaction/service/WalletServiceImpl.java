@@ -22,8 +22,8 @@ public class WalletServiceImpl implements WalletService {
     private final NotificationService notificationService;
 
     @Override
-    public BigDecimal calculateBalance(Long accountId) throws AccountNotFoundException {
-        Wallet wallet = walletRepository.findByAccount_Id(accountId).orElseThrow(AccountNotFoundException::new);
+    public BigDecimal calculateBalance( String email) throws AccountNotFoundException {
+        Wallet wallet = walletRepository.findByAccount_email(email).orElseThrow(AccountNotFoundException::new);
         return wallet.getBalance();
     }
 
