@@ -3,7 +3,6 @@ package com.transaction.service;
 import com.transaction.domain.NotificationType;
 import com.transaction.domain.Transaction;
 import com.transaction.domain.Wallet;
-import com.transaction.enums.TransactionType;
 import com.transaction.exception.AccountNotFoundException;
 import com.transaction.exception.DuplicateWalletException;
 import com.transaction.exception.InSufficientBalanceException;
@@ -40,29 +39,27 @@ public class WalletServiceImpl implements WalletService {
     public Transaction performTransaction(Long accountId, Transaction transaction) throws InSufficientBalanceException, AccountNotFoundException {
         Wallet wallet = walletRepository.findByAccount_Id(accountId).orElseThrow(AccountNotFoundException::new);
         transaction.setWallet(wallet);
-        validateBalance(wallet, transaction);
+        wallet.validateBalance(transaction);
         transaction = transactionRepository.save(transaction);
-        switch (transaction.getType()) {
-            case DEBIT:
-                wallet.subtractBalance(transaction.getAmount());
-                //TODO: Can update this method as per need not passing any transaction data for now
-                notificationService.sendEmail(NotificationType.DEBIT_TRANSACTION,wallet.getAccount().getEmail());
-                break;
-            case CREDIT:
-                wallet.addBalance(transaction.getAmount());
-                //TODO: Can update this method as per need not passing any transaction data for now
-                notificationService.sendEmail(NotificationType.CREDIT_TRANSACTION,wallet.getAccount().getEmail());
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid transaction type");
-        }
+        updateBalance(transaction, wallet);
         walletRepository.save(wallet);
         return transaction;
     }
 
-    private void validateBalance(Wallet wallet, Transaction transactionModel) throws InSufficientBalanceException {
-        if (transactionModel.getType().equals(TransactionType.DEBIT) && transactionModel.getAmount().compareTo(wallet.getBalance()) > 0) {
-            throw new InSufficientBalanceException();
+    private void updateBalance(Transaction transaction, Wallet wallet) {
+        switch (transaction.getType()) {
+            case DEBIT:
+                wallet.subtractBalance(transaction.getAmount());
+                //TODO: Can update this method as per need not passing any transaction data for now
+                notificationService.sendEmail(NotificationType.DEBIT_TRANSACTION, wallet.getAccount().getEmail());
+                break;
+            case CREDIT:
+                wallet.addBalance(transaction.getAmount());
+                //TODO: Can update this method as per need not passing any transaction data for now
+                notificationService.sendEmail(NotificationType.CREDIT_TRANSACTION, wallet.getAccount().getEmail());
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid transaction type");
         }
     }
 }

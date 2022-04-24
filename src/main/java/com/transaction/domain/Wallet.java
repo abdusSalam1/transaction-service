@@ -5,6 +5,8 @@
  */
 package com.transaction.domain;
 
+import com.transaction.enums.TransactionType;
+import com.transaction.exception.InSufficientBalanceException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,5 +41,11 @@ public class Wallet {
     public void subtractBalance(BigDecimal balance) {
         if (balance != null)
             this.balance = getBalance().subtract(balance);
+    }
+
+    public void validateBalance(Transaction transactionModel) throws InSufficientBalanceException {
+        if (transactionModel.getType().equals(TransactionType.DEBIT) && transactionModel.getAmount().compareTo(getBalance()) > 0) {
+            throw new InSufficientBalanceException();
+        }
     }
 }
