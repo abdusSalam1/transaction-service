@@ -44,12 +44,12 @@ public class WalletServiceImpl implements WalletService {
         transaction = transactionRepository.save(transaction);
         switch (transaction.getType()) {
             case DEBIT:
-                wallet.setBalance(wallet.getBalance().subtract(transaction.getAmount()));
+                wallet.subtractBalance(transaction.getAmount());
                 //TODO: Can update this method as per need not passing any transaction data for now
                 notificationService.sendEmail(NotificationType.DEBIT_TRANSACTION,wallet.getAccount().getEmail());
                 break;
             case CREDIT:
-                wallet.setBalance(wallet.getBalance().add(transaction.getAmount()));
+                wallet.addBalance(transaction.getAmount());
                 //TODO: Can update this method as per need not passing any transaction data for now
                 notificationService.sendEmail(NotificationType.CREDIT_TRANSACTION,wallet.getAccount().getEmail());
                 break;
