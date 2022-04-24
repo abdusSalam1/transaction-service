@@ -16,9 +16,9 @@ public class TransactionHandler {
     private final WalletService walletService;
     private final TransactionTransformer transactionTransformer;
 
-    public TransactionModel performTransaction(Long accountId, TransactionModel model) throws InSufficientBalanceException, AccountNotFoundException {
+    public TransactionModel performTransaction(String email, TransactionModel model) throws InSufficientBalanceException, AccountNotFoundException {
         Transaction transaction = transactionTransformer.toEntity(model);
-        Transaction savedTransaction = walletService.performTransaction(accountId, transaction);
+        Transaction savedTransaction = walletService.performTransaction(email, transaction);
         return transactionTransformer.toModel(savedTransaction);
     }
 }

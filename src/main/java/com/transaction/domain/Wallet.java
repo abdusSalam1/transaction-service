@@ -48,4 +48,8 @@ public class Wallet {
             throw new InSufficientBalanceException();
         }
     }
+
+    public BigDecimal getBalance(){
+        return this.balance == null ? BigDecimal.ZERO : this.balance;
+    }
 }

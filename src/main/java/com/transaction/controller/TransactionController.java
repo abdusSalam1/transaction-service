@@ -14,8 +14,8 @@ public class TransactionController {
 
     private final TransactionHandler transactionHandler;
 
-    @PostMapping("/{accountId}")
-    public TransactionModel performTransaction(@PathVariable Long accountId, @RequestBody TransactionModel transactionModel) throws InSufficientBalanceException, AccountNotFoundException {
-        return transactionHandler.performTransaction(accountId, transactionModel);
+    @PostMapping("/{email}")
+    public TransactionModel performTransaction(@PathVariable String email, @RequestBody TransactionModel transactionModel) throws InSufficientBalanceException, AccountNotFoundException {
+        return transactionHandler.performTransaction(email, transactionModel);
     }
 }

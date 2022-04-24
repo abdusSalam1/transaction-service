@@ -10,6 +10,7 @@ import com.transaction.repository.TransactionRepository;
 import com.transaction.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -29,15 +30,16 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public void save(Wallet wallet) throws DuplicateWalletException {
-        if (walletRepository.findByAccount_Id(wallet.getAccount().getId()).isPresent())
+        if (walletRepository.findByAccount_email(wallet.getAccount().getEmail()).isPresent())
             throw new DuplicateWalletException();
         walletRepository.save(wallet);
     }
 
 
     @Override
-    public Transaction performTransaction(Long accountId, Transaction transaction) throws InSufficientBalanceException, AccountNotFoundException {
-        Wallet wallet = walletRepository.findByAccount_Id(accountId).orElseThrow(AccountNotFoundException::new);
+    @Transactional
+    public Transaction performTransaction(String email, Transaction transaction) throws InSufficientBalanceException, AccountNotFoundException {
+        Wallet wallet = walletRepository.findByAccount_email(email).orElseThrow(AccountNotFoundException::new);
         transaction.setWallet(wallet);
         wallet.validateBalance(transaction);
         transaction = transactionRepository.save(transaction);

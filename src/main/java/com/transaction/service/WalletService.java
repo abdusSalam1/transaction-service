@@ -14,5 +14,5 @@ public interface WalletService {
 
     void save(Wallet wallet) throws DuplicateWalletException;
 
-    Transaction performTransaction(Long accountId, Transaction transaction) throws InSufficientBalanceException, AccountNotFoundException;
+    Transaction performTransaction(String email, Transaction transaction) throws InSufficientBalanceException, AccountNotFoundException;
 }
