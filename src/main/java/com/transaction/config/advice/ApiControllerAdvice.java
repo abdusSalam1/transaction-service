@@ -1,6 +1,9 @@
 package com.transaction.config.advice;
 
 import com.transaction.exception.AuthenticationException;
+import com.transaction.exception.DuplicateAccountException;
+import com.transaction.exception.DuplicateWalletException;
+import com.transaction.exception.InSufficientBalanceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -27,13 +30,43 @@ public class ApiControllerAdvice implements ResponseBodyAdvice<Object> {
 
 
     @ExceptionHandler({AuthenticationException.class})
-    public ResponseEntity<Object> handlerAuthenticationException(AuthenticationException ex, WebRequest request) {
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex, WebRequest request) {
         ApiError error = new ApiError(ex.getMessage(), 0);
         ApiResponseEnvelope envelope = new ApiResponseEnvelope(false);
         envelope.addError(error);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         return new ResponseEntity(envelope, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({InSufficientBalanceException.class})
+    public ResponseEntity<Object> handleInSufficientBalanceException(InSufficientBalanceException ex, WebRequest request) {
+        ApiError error = new ApiError(ex.getMessage(), 0);
+        ApiResponseEnvelope envelope = new ApiResponseEnvelope(false);
+        envelope.addError(error);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity(envelope, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({DuplicateAccountException.class})
+    public ResponseEntity<Object> handleDuplicateAccountException(DuplicateAccountException ex, WebRequest request) {
+        ApiError error = new ApiError(ex.getMessage(), 0);
+        ApiResponseEnvelope envelope = new ApiResponseEnvelope(false);
+        envelope.addError(error);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity(envelope, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({DuplicateWalletException.class})
+    public ResponseEntity<Object> handleDuplicateWalletException(DuplicateWalletException ex, WebRequest request) {
+        ApiError error = new ApiError(ex.getMessage(), 0);
+        ApiResponseEnvelope envelope = new ApiResponseEnvelope(false);
+        envelope.addError(error);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity(envelope, HttpStatus.BAD_REQUEST);
     }
 
 

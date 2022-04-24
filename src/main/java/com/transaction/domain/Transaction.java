@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -19,6 +20,9 @@ public class Transaction {
     private TransactionType type;
     private String purpose;
     private String description;
+    private String reference;
+    private LocalDateTime transactionDate;
+    private String creditAccount;
     @Setter
     @ManyToOne
     @JoinColumn(name = "wallet_id", referencedColumnName = "id", nullable = false)

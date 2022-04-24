@@ -1,6 +1,8 @@
 package com.transaction.controller;
 
 import com.transaction.config.CheckClientAuthority;
+import com.transaction.exception.AccountNotFoundException;
+import com.transaction.exception.InSufficientBalanceException;
 import com.transaction.handler.TransactionHandler;
 import com.transaction.model.TransactionModel;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +17,7 @@ public class TransactionController {
 
     @PostMapping("/{accountId}")
     @CheckClientAuthority
-    public void performTransaction(@PathVariable String accountId, @RequestBody TransactionModel transactionModel) {
-        transactionHandler.performTransaction(accountId, transactionModel);
+    public TransactionModel performTransaction(@PathVariable Long accountId, @RequestBody TransactionModel transactionModel) throws InSufficientBalanceException, AccountNotFoundException {
+        return transactionHandler.performTransaction(accountId, transactionModel);
     }
 }

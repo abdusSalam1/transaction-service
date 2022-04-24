@@ -4,7 +4,9 @@ import com.transaction.domain.Wallet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface WalletRepository extends JpaRepository<Wallet, Long> {
-//    Wallet findByWallet_Account_Id(Long id);
+    Optional<Wallet> findByAccount_Id(Long accountId);
 }

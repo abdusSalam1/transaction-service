@@ -1,11 +1,18 @@
 package com.transaction.transformer;
 
 import com.transaction.domain.Transaction;
+import com.transaction.generator.ReferenceGenerator;
 import com.transaction.model.TransactionModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
+@RequiredArgsConstructor
 public class TransactionTransformer implements Transformer<TransactionModel, Transaction> {
+
+    private final ReferenceGenerator referenceGenerator;
 
     @Override
     public Transaction toEntity(TransactionModel model) {
@@ -13,9 +20,13 @@ public class TransactionTransformer implements Transformer<TransactionModel, Tra
             return null;
         else
             return Transaction.builder()
+                    .transactionDate(LocalDateTime.now())
+                    .reference(referenceGenerator.generateReference())
                     .amount(model.getAmount())
-                    .description(model.getDescription())
                     .purpose(model.getPurpose())
+                    .description(model.getDescription())
+                    .creditAccount(model.getCreditAccount())
+                    .type(model.getTransactionType())
                     .build();
     }
 
@@ -26,8 +37,10 @@ public class TransactionTransformer implements Transformer<TransactionModel, Tra
         else
             return TransactionModel.builder()
                     .amount(entity.getAmount())
-                    .description(entity.getDescription())
                     .purpose(entity.getPurpose())
+                    .description(entity.getDescription())
+                    .creditAccount(entity.getCreditAccount())
+                    .transactionType(entity.getType())
                     .build();
     }
 }

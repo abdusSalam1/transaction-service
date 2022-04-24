@@ -5,10 +5,7 @@
  */
 package com.transaction.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -27,6 +24,7 @@ public class Wallet {
     private Long id;
     @ManyToOne
     private Account account;
+    @Setter
     private BigDecimal balance;
     @OneToMany(mappedBy = "wallet")
     private List<Transaction> transactions;

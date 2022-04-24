@@ -1,6 +1,8 @@
 package com.transaction.transformer;
 
 import com.transaction.domain.Transaction;
+import com.transaction.generator.ReferenceGenerator;
+import com.transaction.generator.ReferenceGeneratorImpl;
 import com.transaction.model.TransactionModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,11 +12,13 @@ import java.math.BigDecimal;
 
 class TransactionTransformerTest {
 
+    private ReferenceGenerator referenceGenerator;
     private TransactionTransformer transactionTransformer;
 
     @BeforeEach
     public void setup() {
-        this.transactionTransformer = new TransactionTransformer();
+        this.referenceGenerator = new ReferenceGeneratorImpl();
+        this.transactionTransformer = new TransactionTransformer(referenceGenerator);
     }
 
     @Test
