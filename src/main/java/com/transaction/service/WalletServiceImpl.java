@@ -43,12 +43,12 @@ public class WalletServiceImpl implements WalletService {
         transaction.setWallet(wallet);
         wallet.validateBalance(transaction);
         transaction = transactionRepository.save(transaction);
-        updateBalance(transaction, wallet);
+        updateBalanceAndNotify(transaction, wallet);
         walletRepository.save(wallet);
         return transaction;
     }
 
-    private void updateBalance(Transaction transaction, Wallet wallet) {
+    private void updateBalanceAndNotify(Transaction transaction, Wallet wallet) {
         switch (transaction.getType()) {
             case DEBIT:
                 wallet.subtractBalance(transaction.getAmount());

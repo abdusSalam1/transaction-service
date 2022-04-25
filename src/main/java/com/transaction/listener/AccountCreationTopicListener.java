@@ -22,6 +22,7 @@ public class AccountCreationTopicListener {
     private final NotificationService notificationService;
 
     @KafkaListener(topics = "ACCOUNT_CREATION", groupId = "ACCOUNT_CREATION")
+    @Transactional
     public void listenToEmailTopics(Account account) throws DuplicateAccountException, DuplicateWalletException {
         Account savedAccount = accountService.save(account);
         Wallet wallet = Wallet.builder()
