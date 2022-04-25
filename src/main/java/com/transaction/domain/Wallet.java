@@ -43,8 +43,8 @@ public class Wallet {
             this.balance = getBalance().subtract(balance);
     }
 
-    public void validateBalance(Transaction transactionModel) throws InSufficientBalanceException {
-        if (transactionModel.getType().equals(TransactionType.DEBIT) && transactionModel.getAmount().compareTo(getBalance()) > 0) {
+    public void validateBalance(Transaction transaction) throws InSufficientBalanceException {
+        if (transaction.getType().equals(TransactionType.DEBIT) && transaction.getAmount().compareTo(getBalance()) > 0) {
             throw new InSufficientBalanceException();
         }
     }
